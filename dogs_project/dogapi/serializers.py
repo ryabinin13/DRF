@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import Dog
 
 
-class DogSerializer(serializers.HyperlinkedModelSerializer):
+class DogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dog
-        fields = '__all__'
+        fields = ("name", "age")
+

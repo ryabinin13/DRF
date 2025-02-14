@@ -40,7 +40,22 @@ INSTALLED_APPS = [
 
     'dogapi',
     'rest_framework',
+    'drf_spectacular'
 ]
+
+SPECTACULAR_SETTINGS = {
+            'TITLE': 'Заголовок твоего API',
+            'DESCRIPTION': 'Описание твоего API',
+            'VERSION': '1.0.0',
+            'SERVE_INCLUDE_SCHEMA': False,  # Отключить обслуживание схемы из корневого пути
+        }
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # Другие настройки DRF...
+}
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
