@@ -1,0 +1,31 @@
+version: "3.9"  # Добавлена версия docker-compose
+
+services:
+  web-app:
+    build:
+      context: .  # Важно: точка означает текущую директорию, где находится docker-compose.yml
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./dogs_project:/dogs_project
+    environment:
+      - DB_HOST=database  # Имя сервиса database в docker-compose, а не localhost
+      - DB_NAME=dogs
+      - DB_USER=postgres
+      - DB_PASSWORD=stud # Пароль из docker-compose для базы данных
+    command: >  # Используем exec для надежного запуска приложения
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+
+    depends_on:
+      - database
+
+  database:
+    image: postgres:14.6-alpine
+    environment:
+      - POSTGRES_DB=dogs
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=stud
+    ports: #Добавил проброс порта для удобства подключения к БД
+      - "5432:5432"
+
+    
